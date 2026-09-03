@@ -54,7 +54,6 @@
   /* ---------- Top bar ---------- */
   .topbar{ display:flex; justify-content:space-between; align-items:center; padding:22px 24px; max-width:1000px; margin:0 auto; position:relative; z-index:5; }
   .brand{ display:flex; align-items:center; gap:10px; }
-  .brand .mark{ width:30px; height:30px; background:var(--turq); flex:none; clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); box-shadow:0 0 18px rgba(63,216,201,0.6); }
   .brand .name{ font-family:'Big Shoulders Display'; font-weight:800; font-size:17px; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink); }
   .topbar .call{ font-family:'IBM Plex Mono'; font-size:13px; font-weight:600; letter-spacing:-0.02em; border:1.5px solid var(--line); padding:8px 14px; text-decoration:none; color:var(--ink); }
   .topbar .call:hover{ border-color:var(--turq); color:var(--turq); }
@@ -68,9 +67,9 @@
   @media (max-width:640px){
     .topbar{ flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px; }
     .brand .name{ font-size:15px; }
-    .topbar-right{ width:100%; justify-content:space-between; }
-    .nav-link{ font-size:10px; }
-    .topbar .call{ font-size:12px; padding:7px 12px; }
+    .topbar-right{ width:100%; flex-direction:column; align-items:stretch; }
+    .nav-link{ font-size:11px; text-align:center; }
+    .topbar .call{ font-size:13px; padding:9px 12px; text-align:center; }
   }
 
   /* ---------- Stage (hero video / glow) ---------- */
@@ -174,7 +173,7 @@
 <body>
 
 <div class="topbar">
-  <div class="brand"><span class="mark"></span><span class="name">Suede Buffalo</span></div>
+  <div class="brand"><span class="name">Suede Buffalo</span></div>
   <div class="topbar-right">
     <a class="nav-link" href="https://pharaohm33.github.io/suede-buffalo-vending/">Buy Instead of Profit Share</a>
     <a class="call" href="tel:5206336437">(520) 633-6437</a>
