@@ -14,13 +14,14 @@
 <meta name="twitter:title" content="Smart Vending Placement">
 <meta name="twitter:description" content="Free vending machine placement for your store. Zero cost. You collect a profit share on every sale.">
 <meta name="twitter:image" content="https://pharaohm33.github.io/smart-vending-placement/assets/poster.jpg">
-<meta name="theme-color" content="#100C09">
+<meta name="theme-color" content="#000000">
+<script>if(location.hash){history.replaceState(null,'',location.pathname+location.search);}</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥤</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root{
-    --bg:#100C09;
+    --bg:#000000;
     --surface:#1A1410;
     --surface-2:#221B15;
     --ink:#F4ECDE;
@@ -60,13 +61,14 @@
 
   /* ---------- Stage (hero video / glow) ---------- */
   .stage{
-    position:relative; margin:6px auto 0; max-width:680px; padding:0 24px;
+    position:relative; margin:0 auto; max-width:680px; padding:0 24px;
     display:flex; flex-direction:column; align-items:center; text-align:center;
   }
   .stage-frame{
-    position:relative; width:100%; max-width:230px; aspect-ratio:976/2122;
+    position:relative; width:min(190px, 34vh * 0.46); aspect-ratio:976/2122;
     margin:0 auto; display:flex; align-items:center; justify-content:center;
   }
+  @media (max-height:820px){ .stage-frame{ width:min(150px, 28vh * 0.46); } }
   .glow{
     position:absolute; inset:-10%; border-radius:50%;
     background:radial-gradient(closest-side, rgba(63,216,201,0.35), rgba(63,216,201,0.08) 55%, transparent 75%);
@@ -270,48 +272,6 @@
   // that's since changed size).
   if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
   window.scrollTo(0, 0);
-
-  // After the hero video completes one full loop, if nobody has touched
-  // the page yet, slowly auto-scroll down to reveal the offer section.
-  // Any interaction at all (tap, scroll, click, key) cancels this for
-  // good and hands control back.
-  if(!reduceMotion){
-    var interacted = false;
-    var rafId = null;
-    function cancelAutoScroll(){
-      interacted = true;
-      if(rafId) cancelAnimationFrame(rafId);
-      ['pointerdown','wheel','touchstart','keydown'].forEach(function(evt){
-        window.removeEventListener(evt, cancelAutoScroll);
-      });
-    }
-    ['pointerdown','wheel','touchstart','keydown'].forEach(function(evt){
-      window.addEventListener(evt, cancelAutoScroll, {passive:true});
-    });
-
-    function slowScrollTo(targetY, durationMs){
-      var startY = window.scrollY;
-      var dist = targetY - startY;
-      if(Math.abs(dist) < 2) return;
-      var start = null;
-      function step(ts){
-        if(interacted) return;
-        if(start === null) start = ts;
-        var p = Math.min(1, (ts - start) / durationMs);
-        var eased = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2) / 2; // ease-in-out
-        window.scrollTo(0, startY + dist * eased);
-        if(p < 1){ rafId = requestAnimationFrame(step); }
-      }
-      rafId = requestAnimationFrame(step);
-    }
-
-    var loopMs = 10000; // matches the hero video's loop duration
-    setTimeout(function(){
-      if(interacted) return;
-      var offer = document.getElementById('offer');
-      if(offer){ slowScrollTo(offer.getBoundingClientRect().top + window.scrollY - 8, 6000); }
-    }, loopMs);
-  }
 
   function flash(btn){
     var original = btn.textContent;
